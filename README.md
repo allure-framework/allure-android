@@ -23,7 +23,7 @@ dependencies {
 }
 
 android {
-    testInstrumentationRunner "ru.tinkoff.allure-android.AllureMultiDexRunner"
+    testInstrumentationRunner "ru.tinkoff.allure_android.AllureMultiDexRunner"
 }
 
 ```
