@@ -13,9 +13,9 @@ Add to: _app/build.gradle_
 apply plugin: 'kotlin-android'
 
 dependencies {
-    androidTestCompile "ru.tinkoff.allure-android:allure-android:2.1.0@aar"
-    androidTestCompile "ru.tinkoff.allure-android:allure-common:2.1.0"
-    androidTestCompile "ru.tinkoff.allure-android:allure-model:2.1.0"
+    androidTestCompile "ru.tinkoff.allure_android:allure-android:2.1.0@aar"
+    androidTestCompile "ru.tinkoff.allure_android:allure-common:2.1.0"
+    androidTestCompile "ru.tinkoff.allure_android:allure-model:2.1.0"
 
     androidTestCompile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2-4"
     androidTestCompile "junit:junit:4.12"
