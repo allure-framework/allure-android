@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+    compile project(":allure-model")
+    compile project(":allure-common")
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    compile "junit:junit:${jUnitVersion}"
+
+    compile "com.android.support:support-annotations:${supportVersion}"
+    compile "com.android.support.test:runner:${supportTestVersion}"
+    compile "com.android.support:multidex:${multidexVersion}"
+    compile "com.android.support.test.uiautomator:uiautomator-v18:${uiAutomatorVersion}"
+}
+
+sourceSets {
+    main.java.srcDirs += "src/main/kotlin"
+    test.java.srcDirs += "src/test/kotlin"
+    androidTest.java.srcDirs += "src/androidTest/kotlin"
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        targetSdkVersion rootProject.compileSdkVersion
+        minSdkVersion rootProject.minSdkVersion
+        versionName rootProject.version
+
+        testInstrumentationRunner "ru.tinkoff.allure_android.AllureAndroidRunner"
+    }
+
+    lintOptions {
+        htmlReport true
+        abortOnError true
+        warningsAsErrors true
+        lintConfig file("${project.name}-lint.xml")
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}

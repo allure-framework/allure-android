@@ -1,0 +1,10 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+}
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+}
