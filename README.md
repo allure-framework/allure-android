@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/TinkoffCreditSystems/allure-android.svg?branch=master)](https://api.travis-ci.org/TinkoffCreditSystems/allure-android)
+
 [license]: http://www.apache.org/licenses/LICENSE-2.0 "Apache License 2.0"
 [allure2]: https://github.com/allure-framework/allure2
 [wiki]: https://github.com/TinkoffCreditSystems/allure-android/wiki
