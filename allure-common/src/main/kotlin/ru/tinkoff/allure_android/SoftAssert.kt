@@ -2,21 +2,22 @@ package ru.tinkoff.allure_android
 
 import org.hamcrest.Matcher
 import org.junit.Assert.assertThat
-import org.junit.rules.Verifier
 import org.junit.runners.model.MultipleFailureException
 import ru.tinkoff.allure_android.model.ExecutableItem
 import ru.tinkoff.allure_android.model.Status
 import ru.tinkoff.allure_android.model.StatusDetails
+import ru.tinkoff.allure_android.model.TestResult
 
 /**
  * @author Badya on 01.06.2017.
  */
 
-class SoftAssertRule : Verifier() {
+// todo: use lifecycle instead of direct storage access
+class SoftAssert {
     companion object {
         @JvmStatic
-        fun <T : Any?> softly(block: SoftAssertRule.() -> T): T {
-            with(SoftAssertRule()) {
+        inline fun <T> softly(block: SoftAssert.() -> T): T {
+            with(SoftAssert()) {
                 val result = run { block() }
                 verify()
                 return result
@@ -24,12 +25,10 @@ class SoftAssertRule : Verifier() {
         }
     }
 
-    val lifecycle: AllureLifecycle = AllureCommonLifecycle
-
     val errorsMap = mutableMapOf<String, MutableList<Throwable>>()
 
-    override fun verify() {
-        errorsMap.forEach { uuid, errList ->
+    fun verify() {
+        errorsMap.forEach { (uuid, errList) ->
             AllureStorage.get(uuid, ExecutableItem::class.java).apply {
                 run {
                     try {
@@ -40,11 +39,11 @@ class SoftAssertRule : Verifier() {
                     }
                 }
             }
-            lifecycle.updateTestCase { status = Status.FAILED }
+            AllureStorage.get(AllureStorage.getTest(), TestResult::class.java).apply { status = Status.FAILED }
         }
     }
 
-    fun <T : Any?> checkSucceeds(callable: () -> T): T? {
+    fun <T> checkSucceeds(callable: () -> T): T? {
         try {
             return run(callable)
         } catch (t: Throwable) {
@@ -54,7 +53,7 @@ class SoftAssertRule : Verifier() {
     }
 
     @JvmOverloads
-    fun <T : Any?> checkThat(reason: String = "", value: T, matcher: Matcher<T>) {
+    fun <T> checkThat(reason: String = "", value: T, matcher: Matcher<T>) {
         checkSucceeds({
             assertThat(reason, value, matcher)
             value
