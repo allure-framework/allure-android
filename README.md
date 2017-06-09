@@ -35,22 +35,12 @@ android {
 Read [wiki]
 
 ### Features
-#### [2.0.9] SoftAssert Rule and DSL
-In order to continue execution on minor assertion use `SoftAssertRule`<br />
+#### [2.1.0] SoftAssert DSL
+In order to continue execution on minor assertion use `SoftAssert`<br />
 **!!! SoftAssert marks test passed, result seen only in report**
 
 ```kotlin
 class Test {
-    @Rule
-    @JvmField
-    val softAssertRule = SoftAssertRule()
-
-    // Rule usage
-    @Test
-    fun test1() {
-        softAssertRule.checkThat("FirstAssert", true, IsEqual(false))
-    }
-
     // DSL style
     @Test
     fun test2() {
