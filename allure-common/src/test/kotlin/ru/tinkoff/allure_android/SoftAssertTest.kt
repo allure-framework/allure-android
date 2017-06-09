@@ -6,7 +6,7 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.ExternalResource
 import org.junit.runner.RunWith
-import ru.tinkoff.allure_android.SoftAssertRule.Companion.softly
+import ru.tinkoff.allure_android.SoftAssert.Companion.softly
 import ru.tinkoff.allure_android.Step.Companion.step
 import ru.tinkoff.allure_android.io.FileSystemResultsReader
 import ru.tinkoff.allure_android.model.TestResult
