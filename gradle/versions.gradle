@@ -2,7 +2,7 @@ ext {
 
     compileSdkVersion = 25
     minSdkVersion = 14
-    buildToolsVersion = '25.0.2'
+    buildToolsVersion = '25.0.3'
 
     gsonVersion = '2.8.0'
 
@@ -14,6 +14,6 @@ ext {
     jUnitVersion = '4.12'
     hamcrestVersion = '1.3'
 
-    kotlinVersion = '1.1.2-4'
+    kotlinVersion = '1.1.2-5'
     androidPlugin = '2.3.2'
 }
