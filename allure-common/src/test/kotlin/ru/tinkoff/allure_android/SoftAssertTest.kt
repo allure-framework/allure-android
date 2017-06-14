@@ -1,7 +1,7 @@
 package ru.tinkoff.allure_android
 
 import org.hamcrest.Matchers
-import org.hamcrest.core.IsEqual
+import org.hamcrest.Matchers.`is`
 import org.junit.Assert
 import org.junit.ClassRule
 import org.junit.Test
@@ -55,13 +55,13 @@ class SoftAssertTest {
 
     @Test
     fun softAssert_in_test() {
-        softly { checkThat("FirstAssert", true, IsEqual(false)) }
+        softly { checkThat("FirstAssert", true, `is`(false)) }
     }
 
     @Test
     fun check_soft_asserted_after_test() {
         step("The Only One") {
-            softly { checkThat("FirstAssert", true, IsEqual(false)) }
+            softly { checkThat("FirstAssert", true, `is`(false)) }
             val assertedSoftly = true
             Assert.assertTrue(assertedSoftly)
         }
@@ -70,7 +70,7 @@ class SoftAssertTest {
     @Test(expected = AssertionError::class)
     fun soft_asserts_with_hard_fail_test() {
         step("The Only One") {
-            softly { checkThat("FirstAssert", true, IsEqual(false)) }
+            softly { checkThat("FirstAssert", true, `is`(false)) }
             Assert.fail("Fail test")
         }
     }
@@ -78,10 +78,10 @@ class SoftAssertTest {
     @Test
     fun each_step_has_own_softAsserts() {
         step("First") {
-            softly { checkThat("FirstAssert", true, IsEqual(false)) }
+            softly { checkThat("FirstAssert", true, `is`(false)) }
         }
         step("Second") {
-            softly { checkThat("SecondAssert", true, IsEqual(false)) }
+            softly { checkThat("SecondAssert", true, `is`(false)) }
         }
     }
 
@@ -89,9 +89,9 @@ class SoftAssertTest {
     fun nested_steps_has_own_softAsserts() {
         step("First") {
             step("Second") {
-                softly { checkThat("SecondAssert", true, IsEqual(false)) }
+                softly { checkThat("SecondAssert", true, `is`(false)) }
             }
-            softly { checkThat("FirstAssert", true, IsEqual(false)) }
+            softly { checkThat("FirstAssert", true, `is`(false)) }
         }
     }
 

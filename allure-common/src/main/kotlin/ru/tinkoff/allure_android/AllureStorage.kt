@@ -93,8 +93,8 @@ object AllureStorage {
     }
 
     internal fun <T> remove(uuid: String?, type: Class<out T>): T {
-        val key = requireNotNull(uuid, { "Failed to remove item from storage: uuid can't be null" })
-        val any: Any = requireNotNull(storage.remove(key), { "Failed to remove item from storage: $type by $uuid" })
+        val key = requireNotNull(uuid) { "Failed to remove item from storage: uuid can't be null" }
+        val any: Any = requireNotNull(storage.remove(key)) { "Failed to remove item from storage: $type by $uuid" }
         return type.cast(any)
     }
 

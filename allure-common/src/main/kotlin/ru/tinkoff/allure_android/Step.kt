@@ -15,7 +15,7 @@ class Step {
 
     companion object {
         @JvmStatic
-        inline fun <T : Any?> step(description: String, vararg params: Any = emptyArray<Any>(), block: () -> T): T {
+        inline fun <T> step(description: String, vararg params: Any = emptyArray<Any>(), block: () -> T): T {
             with(Step()) {
                 val result: T
                 stepStart(description, params)
