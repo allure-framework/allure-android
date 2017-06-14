@@ -15,18 +15,4 @@ class TestResult(
         @SerializedName("fullName") var fullName: String? = null,
         @SerializedName("labels") var labels: List<Label> = ArrayList(),
         @SerializedName("links") var links: List<Link> = ArrayList()
-) : ExecutableItem(name = name) {
-
-    override fun withName(name: String?): TestResult {
-        return super.withName(name) as TestResult
-    }
-
-    override fun withStatus(status: Status?): TestResult {
-        return super.withStatus(status) as TestResult
-    }
-
-    override fun withStatusDetails(statusDetails: StatusDetails?): TestResult {
-        return super.withStatusDetails(statusDetails) as TestResult
-    }
-
-}
+) : ExecutableItem(name = name)

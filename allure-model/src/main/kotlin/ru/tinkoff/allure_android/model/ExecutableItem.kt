@@ -17,27 +17,4 @@ abstract class ExecutableItem(
         @SerializedName("steps") override var steps: MutableList<StepResult> = ArrayList(),
         @SerializedName("attachments") override var attachments: MutableList<Attachment> = ArrayList(),
         @SerializedName("parameters") override var parameters: MutableList<Parameter> = ArrayList()
-) : WithSteps, WithAttachments, WithParameters, WithStatusDetails {
-
-
-    open fun withName(name: String?): ExecutableItem {
-        this.name = name
-        return this
-    }
-
-    open fun withStatus(status: Status?): ExecutableItem {
-        this.status = status
-        return this
-    }
-
-    open fun withStatusDetails(statusDetails: StatusDetails?): ExecutableItem {
-        this.statusDetails = statusDetails
-        return this
-    }
-
-    open fun withParameters(params: Array<Parameter>): ExecutableItem {
-        parameters.addAll(params)
-        return this
-    }
-}
-
+) : WithSteps, WithAttachments, WithParameters, WithStatusDetails

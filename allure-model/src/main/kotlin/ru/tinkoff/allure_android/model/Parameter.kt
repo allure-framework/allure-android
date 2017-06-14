@@ -7,15 +7,4 @@ import com.google.gson.annotations.SerializedName
  */
 class Parameter(
         @SerializedName("name") var name: String? = null,
-        @SerializedName("value") var value: String? = null) {
-
-    fun withName(name: String?): Parameter {
-        this.name = name
-        return this
-    }
-
-    fun withValue(value: String?): Parameter {
-        this.value = value
-        return this
-    }
-}
+        @SerializedName("value") var value: String? = null)

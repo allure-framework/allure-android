@@ -1,5 +1,6 @@
 package ru.tinkoff.allure_android
 
+import org.hamcrest.Matchers
 import org.hamcrest.core.IsEqual
 import org.junit.Assert
 import org.junit.ClassRule
@@ -94,4 +95,10 @@ class SoftAssertTest {
         }
     }
 
+    @Test
+    fun actual_can_be_null() {
+        softly {
+            checkThat("Null check", null, Matchers.isEmptyOrNullString())
+        }
+    }
 }

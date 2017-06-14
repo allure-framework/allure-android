@@ -16,11 +16,10 @@ import ru.tinkoff.allure_android.model.TestResult
 class SoftAssert {
     companion object {
         @JvmStatic
-        inline fun <T> softly(block: SoftAssert.() -> T): T {
+        inline fun softly(block: SoftAssert.() -> Unit): Unit {
             with(SoftAssert()) {
-                val result = run { block() }
+                block()
                 verify()
-                return result
             }
         }
     }
@@ -43,24 +42,22 @@ class SoftAssert {
         }
     }
 
-    fun <T> checkSucceeds(callable: () -> T): T? {
+    private inline fun checkSucceeds(callable: () -> Unit): Unit {
         try {
-            return run(callable)
+            callable()
         } catch (t: Throwable) {
             addError(t)
-            return null
         }
     }
 
     @JvmOverloads
     fun <T> checkThat(reason: String = "", value: T, matcher: Matcher<T>) {
-        checkSucceeds({
+        checkSucceeds {
             assertThat(reason, value, matcher)
-            value
-        })
+        }
     }
 
-    fun addError(error: Throwable) {
+    private fun addError(error: Throwable) {
         errorsMap.getOrPut(AllureStorage.getCurrentStep(), defaultValue = { mutableListOf<Throwable>() }).add(error)
     }
 }
