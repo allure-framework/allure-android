@@ -1,6 +1,11 @@
 apply from: 'gradle/common.gradle'
 apply from: 'gradle/versions.gradle'
 
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
+
 buildscript{
     apply from: 'gradle/versions.gradle'
     repositories {
