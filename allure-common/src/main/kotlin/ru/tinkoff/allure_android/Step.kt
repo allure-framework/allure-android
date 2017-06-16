@@ -34,7 +34,7 @@ class Step {
     }
 
     fun stepCompleted() =
-            lifecycle.updateStep { status = Status.PASSED }
+            lifecycle.updateStep { if (status == null) status = Status.PASSED }
 
     fun stepStart(name: String, vararg params: Any) {
         fun createParam(obj: Any): Parameter {
