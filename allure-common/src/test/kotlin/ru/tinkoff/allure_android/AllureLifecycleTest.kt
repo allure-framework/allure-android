@@ -4,8 +4,6 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import ru.tinkoff.allure_android.io.FileSystemResultsReader
-import ru.tinkoff.allure_android.io.FileSystemResultsWriter
 import ru.tinkoff.allure_android.model.Stage
 import ru.tinkoff.allure_android.model.StepResult
 import ru.tinkoff.allure_android.model.TestResult
@@ -22,7 +20,7 @@ class AllureLifecycleTest {
 
     @Before
     fun setup() {
-        lifecycle = AllureLifecycle(FileSystemResultsReader(), FileSystemResultsWriter())
+        lifecycle = AllureCommonLifecycle
         testContainer = TestResultContainer()
         testResult = TestResult()
         stepResult = StepResult()

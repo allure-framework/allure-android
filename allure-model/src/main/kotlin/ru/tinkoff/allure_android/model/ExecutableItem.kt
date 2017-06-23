@@ -17,4 +17,16 @@ abstract class ExecutableItem(
         @SerializedName("steps") override var steps: MutableList<StepResult> = ArrayList(),
         @SerializedName("attachments") override var attachments: MutableList<Attachment> = ArrayList(),
         @SerializedName("parameters") override var parameters: MutableList<Parameter> = ArrayList()
-) : WithSteps, WithAttachments, WithParameters, WithStatusDetails
+) : WithSteps, WithAttachments, WithParameters, WithStatusDetails {
+    fun determineStatus(): Status? {
+        if (steps.isEmpty()) return status
+        steps.map { it.determineStatus() }.forEach {
+            when (it) {
+                Status.BROKEN -> if (status != Status.FAILED) status = Status.BROKEN
+                Status.FAILED -> status = Status.FAILED
+                else -> status
+            }
+        }
+        return status
+    }
+}

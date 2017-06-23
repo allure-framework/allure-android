@@ -13,8 +13,8 @@ object AllureCommonLifecycle : AllureLifecycle(
         reader = FileSystemResultsReader(),
         writer = FileSystemResultsWriter())
 
-open class AllureLifecycle(private val reader: AllureResultsReader,
-                           private val writer: AllureResultsWriter) :
+abstract class AllureLifecycle(private val reader: AllureResultsReader,
+                               private val writer: AllureResultsWriter) :
         StepLifecycleListener by StepLifecycleNotifier,
         TestLifecycleListener by TestLifecycleNotifier,
         ContainerLifecycleListener by ContainerLifecycleNotifier {
@@ -101,6 +101,7 @@ open class AllureLifecycle(private val reader: AllureResultsReader,
             beforeTestStop(this)
             stage = Stage.FINISHED
             stop = System.currentTimeMillis()
+            status = determineStatus()
             steps.forEach { AllureStorage.remove(it.uuid, StepResult::class.java) }
             afterTestStop(this)
         }
@@ -150,6 +151,7 @@ open class AllureLifecycle(private val reader: AllureResultsReader,
             beforeStepStop(this)
             stage = Stage.FINISHED
             stop = System.currentTimeMillis()
+            status = determineStatus()
             AllureStorage.stopStep()
             afterStepStop(this)
         }

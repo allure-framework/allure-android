@@ -54,9 +54,6 @@ class Step {
                 status = Status.fromThrowable(t)
                 statusDetails = StatusDetails.fromThrowable(t)
             }
-            updateTestCase {
-                status = Status.fromThrowable(t)
-            }
         }
     }
 

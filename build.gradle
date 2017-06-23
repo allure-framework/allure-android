@@ -25,5 +25,5 @@ allprojects {
     }
 
     group "ru.tinkoff.allure_android"
-    version = "2.1.0"
+    version = "2.1.4"
 }
