@@ -29,7 +29,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         versionName rootProject.version
 
-        testInstrumentationRunner "ru.tinkoff.allure_android.AllureAndroidRunner"
+        testInstrumentationRunner "ru.tinkoff.allure.android.AllureAndroidRunner"
     }
 
     lintOptions {

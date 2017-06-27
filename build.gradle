@@ -3,7 +3,7 @@ apply from: 'gradle/versions.gradle'
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4.0'
 }
 
 buildscript{
@@ -24,6 +24,8 @@ allprojects {
         mavenCentral()
     }
 
-    group "ru.tinkoff.allure_android"
+    apply plugin: "idea"
+
+    group "ru.tinkoff.allure"
     version = "2.1.4"
 }
