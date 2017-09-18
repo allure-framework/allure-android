@@ -1,8 +1,22 @@
 package ru.tinkoff.allure
 
-import ru.tinkoff.allure.io.*
-import ru.tinkoff.allure.listener.*
-import ru.tinkoff.allure.model.*
+import ru.tinkoff.allure.io.AllureFileConstants
+import ru.tinkoff.allure.io.AllureResultsReader
+import ru.tinkoff.allure.io.AllureResultsWriter
+import ru.tinkoff.allure.io.FileSystemResultsReader
+import ru.tinkoff.allure.io.FileSystemResultsWriter
+import ru.tinkoff.allure.listener.ContainerLifecycleListener
+import ru.tinkoff.allure.listener.ContainerLifecycleNotifier
+import ru.tinkoff.allure.listener.StepLifecycleListener
+import ru.tinkoff.allure.listener.StepLifecycleNotifier
+import ru.tinkoff.allure.listener.TestLifecycleListener
+import ru.tinkoff.allure.listener.TestLifecycleNotifier
+import ru.tinkoff.allure.model.Attachment
+import ru.tinkoff.allure.model.Stage
+import ru.tinkoff.allure.model.StepResult
+import ru.tinkoff.allure.model.TestResult
+import ru.tinkoff.allure.model.TestResultContainer
+import ru.tinkoff.allure.model.WithAttachments
 import java.io.File
 import java.util.*
 
@@ -158,7 +172,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun addAttachment(name: String?, type: String?, fileExtension: String?, file: File) {
-        writer.copy(file, prepareAttachment(name, type, fileExtension))
+        writer.move(file, prepareAttachment(name, type, fileExtension))
     }
 
     open fun prepareAttachment(name: String?, type: String?, fileExtension: String?): File {

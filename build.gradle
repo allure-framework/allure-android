@@ -1,13 +1,13 @@
-apply from: 'gradle/common.gradle'
-apply from: 'gradle/versions.gradle'
+apply from: "gradle/common.gradle"
+apply from: "gradle/versions.gradle"
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.0'
+    gradleVersion = "4.1"
 }
 
 buildscript{
-    apply from: 'gradle/versions.gradle'
+    apply from: "gradle/versions.gradle"
     repositories {
         jcenter()
         mavenCentral()
@@ -22,10 +22,11 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        google()
     }
 
     apply plugin: "idea"
 
     group "ru.tinkoff.allure"
-    version = "2.1.4"
+    version = "2.2.0"
 }

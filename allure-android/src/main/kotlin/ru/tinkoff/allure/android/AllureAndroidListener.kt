@@ -14,7 +14,8 @@ import ru.tinkoff.allure.AllureRunListener
 
 @Keep
 class AllureAndroidListener : AllureRunListener() {
-    override val lifecycle: AllureLifecycle by lazy { AllureAndroidLifecycle }
+    override val lifecycle: AllureLifecycle
+        get() = AllureAndroidLifecycle
 
     override fun testRunStarted(description: Description) {
         grantPermissions()

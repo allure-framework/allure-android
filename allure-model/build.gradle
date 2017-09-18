@@ -1,4 +1,4 @@
-apply plugin: 'kotlin'
+apply plugin: "kotlin"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
@@ -9,5 +9,5 @@ dependencies {
 }
 
 sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs += "src/main/kotlin"
 }

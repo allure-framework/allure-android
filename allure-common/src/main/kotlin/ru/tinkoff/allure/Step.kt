@@ -11,14 +11,14 @@ import ru.tinkoff.allure.model.StepResult
 
 class Step {
     // todo: commonLifecycle works on Android, only 'cause steps don't call writer
-    val lifecycle: AllureLifecycle = AllureCommonLifecycle
+    private val lifecycle: AllureLifecycle = AllureCommonLifecycle
 
     companion object {
         @JvmStatic
-        inline fun <T> step(description: String, vararg params: Any = emptyArray<Any>(), block: () -> T): T {
+        inline fun <T : Any?> step(description: String, vararg params: Parameter, block: () -> T): T {
             with(Step()) {
                 val result: T
-                stepStart(description, params)
+                stepStart(description, *params)
                 try {
                     result = block()
                     stepCompleted()
@@ -36,14 +36,10 @@ class Step {
     fun stepCompleted() =
             lifecycle.updateStep { if (status == null) status = Status.PASSED }
 
-    fun stepStart(name: String, vararg params: Any) {
-        fun createParam(obj: Any): Parameter {
-            return Parameter(value = obj.toString())
-        }
-
+    fun stepStart(name: String, vararg params: Parameter) {
         val step = StepResult().apply {
             this.name = name
-            parameters.addAll(params.map { createParam(it) })
+            parameters.addAll(params)
         }
         lifecycle.startStep(step)
     }

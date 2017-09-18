@@ -1,9 +1,8 @@
 package ru.tinkoff.allure.android
 
-import android.os.Environment.getExternalStorageDirectory
+import android.os.Environment
 import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.uiautomator.UiDevice
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -12,8 +11,7 @@ import java.util.concurrent.TimeUnit
 object Screenshot {
     @JvmStatic
     fun deviceScreenshot(tag: String) {
-        val file = File.createTempFile("attachment", null, getExternalStorageDirectory())
-        file.deleteOnExit()
+        val file = createTempFile("attachment", null, Environment.getExternalStorageDirectory())
         with(UiDevice.getInstance(getInstrumentation())) {
             waitForIdle(TimeUnit.SECONDS.toMillis(5))
             takeScreenshot(file)

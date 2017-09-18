@@ -12,5 +12,6 @@ interface AllureResultsWriter {
     fun write(testResult: TestResult)
     fun write(testResultContainer: TestResultContainer)
     fun write(dest: String, attachment: InputStream)
-    fun copy(src: File, dest: File) // TODO: move+copy interface
+    fun copy(src: File, dest: File)
+    fun move(src: File, dest: File)
 }

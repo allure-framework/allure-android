@@ -3,6 +3,6 @@ allprojects {
         options.encoding = "UTF-8"
     }
     configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheChangingModulesFor 0, "seconds"
     }
 }

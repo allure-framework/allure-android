@@ -1,16 +1,17 @@
-apply plugin: 'kotlin'
+apply plugin: "kotlin"
 
 dependencies {
-    compile project(':allure-model')
+    compile project(":allure-model")
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     compile "com.google.code.gson:gson:${gsonVersion}"
     compile "junit:junit:${jUnitVersion}"
+
     testCompile "junit:junit:${jUnitVersion}"
     testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
 }
 
 sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/test/kotlin'
+    main.java.srcDirs += "src/main/kotlin"
+    test.java.srcDirs += "src/test/kotlin"
 }

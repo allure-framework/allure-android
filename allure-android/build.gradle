@@ -1,17 +1,15 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 
 dependencies {
     compile project(":allure-model")
     compile project(":allure-common")
-
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-    compile "junit:junit:${jUnitVersion}"
-
     compile "com.android.support:support-annotations:${supportVersion}"
     compile "com.android.support.test:runner:${supportTestVersion}"
     compile "com.android.support:multidex:${multidexVersion}"
     compile "com.android.support.test.uiautomator:uiautomator-v18:${uiAutomatorVersion}"
+    compile "junit:junit:${jUnitVersion}"
 }
 
 sourceSets {
@@ -40,8 +38,8 @@ android {
     }
 
     packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
+        exclude "LICENSE.txt"
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/NOTICE.txt"
     }
 }

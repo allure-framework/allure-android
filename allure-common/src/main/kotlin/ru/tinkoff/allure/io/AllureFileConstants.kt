@@ -1,7 +1,6 @@
 package ru.tinkoff.allure.io
 
 import java.util.*
-import java.util.regex.Pattern
 
 /**
  * @author Badya on 18.04.2017.
@@ -10,13 +9,13 @@ object AllureFileConstants {
     @JvmField
     val TEST_RESULT_FILE_SUFFIX = "-result.json"
     @JvmField
-    val TEST_RESULT_FILE_PATTERN = Pattern.compile(".+-result.json")
+    val TEST_RESULT_FILE_PATTERN = ".+-result.json".toRegex()
     @JvmField
     val TEST_RESULT_FILE_GLOB = "*-result.json"
     @JvmField
     val TEST_RESULT_CONTAINER_FILE_SUFFIX = "-container.json"
     @JvmField
-    val TEST_RESULT_CONTAINER_FILE_PATTERN = Pattern.compile(".+-container.json")
+    val TEST_RESULT_CONTAINER_FILE_PATTERN = ".+-container.json".toRegex()
     @JvmField
     val TEST_RESULT_CONTAINER_FILE_GLOB = "*-container.json"
     @JvmField
@@ -26,7 +25,7 @@ object AllureFileConstants {
     @JvmField
     val ATTACHMENT_FILE_SUFFIX = "-attachment"
     @JvmField
-    val ATTACHMENT_FILE_PATTERN = Pattern.compile(".+-attachment.*")
+    val ATTACHMENT_FILE_PATTERN = ".+-attachment.*".toRegex()
     @JvmField
     val TXT_EXTENSION = ".txt"
     @JvmField

@@ -60,6 +60,11 @@ open class FileSystemResultsWriter(val resultsDir: File = FileSystemResultsWrite
         }
     }
 
+    override fun move(src: File, dest: File) {
+        copy(src, dest)
+        src.delete()
+    }
+
 }
 
 class AllureResultsWriteException(message: String?, cause: Throwable) : RuntimeException(message, cause)

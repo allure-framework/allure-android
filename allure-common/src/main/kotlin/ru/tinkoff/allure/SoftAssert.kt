@@ -16,7 +16,7 @@ import ru.tinkoff.allure.model.TestResult
 class SoftAssert {
     companion object {
         @JvmStatic
-        inline fun softly(block: SoftAssert.() -> Unit): Unit {
+        inline fun softly(block: SoftAssert.() -> Unit) {
             with(SoftAssert()) {
                 block()
                 verify()
@@ -24,7 +24,7 @@ class SoftAssert {
         }
     }
 
-    val errorsMap = mutableMapOf<String, MutableList<Throwable>>()
+    private val errorsMap = mutableMapOf<String, MutableList<Throwable>>()
 
     fun verify() {
         errorsMap.forEach { (uuid, errList) ->
@@ -58,6 +58,6 @@ class SoftAssert {
     }
 
     private fun addError(error: Throwable) {
-        errorsMap.getOrPut(AllureStorage.getCurrentStep(), defaultValue = { mutableListOf<Throwable>() }).add(error)
+        errorsMap.getOrPut(AllureStorage.getCurrentStep(), defaultValue = { mutableListOf() }).add(error)
     }
 }
