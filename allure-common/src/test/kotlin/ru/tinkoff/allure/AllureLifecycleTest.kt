@@ -19,7 +19,7 @@ class AllureLifecycleTest {
     lateinit var stepResult: StepResult
 
     @Before
-    fun setup() {
+    fun setUp() {
         lifecycle = AllureCommonLifecycle
         testContainer = TestResultContainer()
         testResult = TestResult()

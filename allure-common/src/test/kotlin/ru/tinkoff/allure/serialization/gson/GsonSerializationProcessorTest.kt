@@ -1,12 +1,12 @@
 package ru.tinkoff.allure.serialization.gson
 
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.tinkoff.allure.model.Label
 import ru.tinkoff.allure.model.Link
 import ru.tinkoff.allure.model.TestResult
+import kotlin.test.assertEquals
 
 /**
  * @author Badya on 01.06.2017.
@@ -28,7 +28,7 @@ class GsonSerializationProcessorTest {
 
     @Test
     fun serializeTestResult() =
-            Assert.assertEquals("Serialize TestResult failed",
+            assertEquals(
                     """{
                       |  "uuid": "${testResult.uuid}",
                       |  "historyId": "${testResult.historyId}",
@@ -49,7 +49,8 @@ class GsonSerializationProcessorTest {
                       |  "attachments": [],
                       |  "parameters": []
                       |}""".trimMargin(),
-                    GsonSerializationProcessor.serialize(testResult)
+                    GsonSerializationProcessor.serialize(testResult),
+                    "Serialize TestResult failed"
             )
 
 
@@ -57,7 +58,7 @@ class GsonSerializationProcessorTest {
     fun deserializeTestResult() {
         val deserialized = GsonSerializationProcessor.deserialize(GsonSerializationProcessor.serialize(testResult), TestResult::class.java)
 
-        Assert.assertEquals(testResult.uuid, deserialized.uuid)
-        Assert.assertEquals(testResult.fullName, deserialized.fullName)
+        assertEquals(testResult.uuid, deserialized.uuid)
+        assertEquals(testResult.fullName, deserialized.fullName)
     }
 }

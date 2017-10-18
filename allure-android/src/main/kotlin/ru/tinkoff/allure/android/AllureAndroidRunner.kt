@@ -8,6 +8,7 @@ import android.support.test.runner.AndroidJUnitRunner
  * @author Badya on 30.03.2017.
  */
 
+@Suppress("unused")
 @Keep
 open class AllureAndroidRunner : AndroidJUnitRunner() {
     override fun onCreate(arguments: Bundle) {

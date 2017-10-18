@@ -19,12 +19,9 @@ data class StatusDetails(
         fun fromThrowable(e: Throwable?): StatusDetails? {
             if (e == null) return null
             return StatusDetails(
-                    message = e.message,
-                    trace = e.run {
-                        val stringWriter = StringWriter()
-                        printStackTrace(PrintWriter(stringWriter))
-                        stringWriter.toString()
-                    })
+                    message = e.message?.substringBefore('\n'),
+                    trace = StringWriter().also { e.printStackTrace(PrintWriter(it)) }.toString()
+            )
         }
     }
 }

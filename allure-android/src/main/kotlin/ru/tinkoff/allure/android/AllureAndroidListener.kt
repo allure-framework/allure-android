@@ -28,6 +28,8 @@ class AllureAndroidListener : AllureRunListener() {
 
     private fun grantPermissions() {
         UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().context.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
+        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().targetContext.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
         UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().context.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().targetContext.packageName + " android.permission.READ_EXTERNAL_STORAGE")
     }
 }

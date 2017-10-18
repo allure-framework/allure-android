@@ -1,21 +1,19 @@
 package ru.tinkoff.allure.android
 
 import android.os.Environment
-import android.support.test.InstrumentationRegistry.getInstrumentation
+import android.support.test.InstrumentationRegistry
 import android.support.test.uiautomator.UiDevice
 import java.util.concurrent.TimeUnit
 
 /**
  * @author Badya on 31.05.2017.
  */
-object Screenshot {
-    @JvmStatic
-    fun deviceScreenshot(tag: String) {
-        val file = createTempFile("attachment", null, Environment.getExternalStorageDirectory())
-        with(UiDevice.getInstance(getInstrumentation())) {
-            waitForIdle(TimeUnit.SECONDS.toMillis(5))
-            takeScreenshot(file)
-        }
-        AllureAndroidLifecycle.addAttachment(name = tag, type = "image/png", fileExtension = ".png", file = file)
+
+fun deviceScreenshot(tag: String) {
+    val file = createTempFile("attachment", null, Environment.getExternalStorageDirectory())
+    with(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())) {
+        waitForIdle(TimeUnit.SECONDS.toMillis(5))
+        takeScreenshot(file)
     }
+    AllureAndroidLifecycle.addAttachment(name = tag, type = "image/png", fileExtension = ".png", file = file)
 }

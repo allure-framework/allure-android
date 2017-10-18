@@ -9,29 +9,26 @@ import ru.tinkoff.allure.model.StepResult
  * @author Badya on 31.05.2017.
  */
 
-class Step {
-    // todo: commonLifecycle works on Android, only 'cause steps don't call writer
-    private val lifecycle: AllureLifecycle = AllureCommonLifecycle
-
-    companion object {
-        @JvmStatic
-        inline fun <T : Any?> step(description: String, vararg params: Parameter, block: () -> T): T {
-            with(Step()) {
-                val result: T
-                stepStart(description, *params)
-                try {
-                    result = block()
-                    stepCompleted()
-                } catch (t: Throwable) {
-                    stepThrown(t)
-                    throw t
-                } finally {
-                    stepStop()
-                }
-                return result
-            }
+inline fun <T> step(description: String, vararg params: Parameter, block: () -> T): T {
+    with(Step()) {
+        val result: T
+        stepStart(description, *params)
+        try {
+            result = block()
+            stepCompleted()
+        } catch (t: Throwable) {
+            stepThrown(t)
+            throw t
+        } finally {
+            stepStop()
         }
+        return result
     }
+}
+
+class Step {
+    // todo: CommonLifecycle works on Android, only 'cause steps don't call writer
+    private val lifecycle: AllureLifecycle = AllureCommonLifecycle
 
     fun stepCompleted() =
             lifecycle.updateStep { if (status == null) status = Status.PASSED }

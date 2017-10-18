@@ -12,12 +12,6 @@ dependencies {
     compile "junit:junit:${jUnitVersion}"
 }
 
-sourceSets {
-    main.java.srcDirs += "src/main/kotlin"
-    test.java.srcDirs += "src/test/kotlin"
-    androidTest.java.srcDirs += "src/androidTest/kotlin"
-}
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -41,5 +35,10 @@ android {
         exclude "LICENSE.txt"
         exclude "META-INF/LICENSE.txt"
         exclude "META-INF/NOTICE.txt"
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
     }
 }

@@ -12,18 +12,15 @@ import ru.tinkoff.allure.model.TestResult
  * @author Badya on 01.06.2017.
  */
 
+inline fun softly(block: SoftAssert.() -> Unit) {
+    with(SoftAssert()) {
+        block()
+        verify()
+    }
+}
+
 // todo: use lifecycle instead of direct storage access
 class SoftAssert {
-    companion object {
-        @JvmStatic
-        inline fun softly(block: SoftAssert.() -> Unit) {
-            with(SoftAssert()) {
-                block()
-                verify()
-            }
-        }
-    }
-
     private val errorsMap = mutableMapOf<String, MutableList<Throwable>>()
 
     fun verify() {

@@ -70,10 +70,10 @@ open class AllureRunListener : RunListener() {
     override fun testStarted(description: Description) {
         // val uuid = AllureStorage.getTest()
         val testResult = TestResult(
-                historyId = getHistoryId(description),
-                name = getMethodDisplayName(description),
+                historyId = description.getHistoryId(),
+                name = description.getMethodDisplayName(),
                 fullName = "${description.className}.${description.methodName}",
-                links = getLinks(description),
+                links = description.getLinks(),
                 labels = listOf(
                         Label("package", getPackage(description.testClass)),
                         Label("testClass", description.className),
@@ -165,7 +165,7 @@ open class AllureRunListener : RunListener() {
 
     protected fun createContainer(description: Description): TestResultContainer {
         val container = TestResultContainer(
-                name = getClassDisplayName(description),
+                name = description.getClassDisplayName(),
                 start = System.currentTimeMillis()
         )
 

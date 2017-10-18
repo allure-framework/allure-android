@@ -14,13 +14,20 @@ import java.io.InputStream
 /**
  * @author Badya on 18.04.2017.
  */
-open class FileSystemResultsWriter(val resultsDir: File = FileSystemResultsWriter.getDefaultResultsDir(),
+fun getDefaultResultsDir() = File(System.getProperty("allure.results.directory", "build/allure-results"))
+
+open class FileSystemResultsReader(val resultsDir: File = getDefaultResultsDir(),
+                                   val serializationProcessor: SerializationProcessor = GsonSerializationProcessor) : AllureResultsReader {
+
+    override fun getAttachmentFile(src: String): File = File(resultsDir, src)
+
+    fun <T> read(file: File, type: Class<T>): T = serializationProcessor.deserialize(file, type)
+
+    fun listResults(): Array<out File>? = resultsDir.listFiles()
+}
+
+open class FileSystemResultsWriter(val resultsDir: File = getDefaultResultsDir(),
                                    val serializationProcessor: SerializationProcessor = GsonSerializationProcessor) : AllureResultsWriter {
-    companion object {
-        @JvmStatic
-        fun getDefaultResultsDir() =
-                File(System.getProperty("allure.results.directory", "build/allure-results"))
-    }
 
     init {
         resultsDir.mkdirs()

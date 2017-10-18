@@ -12,8 +12,14 @@ import java.io.File
 /**
  * @author Badya on 06.06.2017.
  */
-object AllureAndroidLifecycle : AllureLifecycle(FileSystemResultsReader(obtainDirectory("allure-results")), FileSystemResultsWriter(obtainDirectory("allure-results")))
+object AllureAndroidLifecycle : AllureLifecycle(
+        FileSystemResultsReader(obtainDirectory("allure-results")),
+        FileSystemResultsWriter(obtainDirectory("allure-results")))
 
-fun obtainDirectory(path: String): File =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) File(Environment.getExternalStorageDirectory(), path)
-        else getInstrumentation().context.getDir(path, Context.MODE_WORLD_READABLE)
+fun obtainDirectory(path: String): File {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        return File(Environment.getExternalStorageDirectory(), path)
+    } else {
+        return getInstrumentation().context.getDir(path, Context.MODE_WORLD_READABLE)
+    }
+}

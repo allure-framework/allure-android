@@ -13,12 +13,7 @@ import java.io.*
 object GsonSerializationProcessor : SerializationProcessor {
     private val EMPTY_STRING_BYTES = "".toByteArray(Charsets.UTF_8)
 
-    private val gson: Gson
-
-    init {
-        val builder = GsonBuilder().setPrettyPrinting()
-        gson = builder.create()
-    }
+    private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     override fun serialize(src: Any): String {
         return gson.toJson(src)

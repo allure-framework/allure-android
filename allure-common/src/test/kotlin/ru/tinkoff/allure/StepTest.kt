@@ -2,7 +2,6 @@ package ru.tinkoff.allure
 
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.tinkoff.allure.Step.Companion.step
 import ru.tinkoff.allure.model.Parameter
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

@@ -12,12 +12,28 @@ import java.security.MessageDigest
 
 const val ISSUE_LINK_TYPE = "issue"
 
-fun getMethodDisplayName(description: org.junit.runner.Description): String {
-    return description.getAnnotation(DisplayName::class.java)?.value ?: description.methodName
+fun org.junit.runner.Description.getMethodDisplayName(): String {
+    return getAnnotation(DisplayName::class.java)?.value ?: methodName
 }
 
-fun getClassDisplayName(description: org.junit.runner.Description): String? {
-    return (description.testClass.getAnnotation(DisplayName::class.java) as? DisplayName)?.value ?: description.className
+fun org.junit.runner.Description.getClassDisplayName(): String {
+    return testClass.getAnnotation(DisplayName::class.java)?.value ?: className
+}
+
+fun org.junit.runner.Description.getLinks(): List<Link> {
+    return getAnnotationsOnClass(ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
+            getAnnotationsOnMethod(ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
+            getAnnotationsOnClass(Issue::class.java).map { createLink(it) } +
+            getAnnotationsOnMethod(Issue::class.java).map { createLink(it) }
+
+}
+
+fun <T : Annotation> org.junit.runner.Description.getAnnotationsOnMethod(clazz: Class<T>): List<T> {
+    return listOfNotNull(getAnnotation(clazz)) + extractRepeatable(clazz)
+}
+
+fun <T : Annotation> org.junit.runner.Description.getAnnotationsOnClass(clazz: Class<T>): List<T> {
+    return listOfNotNull(testClass.getAnnotation(clazz))
 }
 
 fun createLink(link: ru.tinkoff.allure.annotations.Link): Link {
@@ -41,22 +57,6 @@ fun getLinkUrl(name: String?, type: String): String? {
     return pattern.replace("\\{}", name ?: "")
 }
 
-fun getLinks(description: org.junit.runner.Description): List<Link> {
-    return getAnnotationsOnClass(description, ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
-            getAnnotationsOnMethod(description, ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
-            getAnnotationsOnClass(description, Issue::class.java).map { createLink(it) } +
-            getAnnotationsOnMethod(description, Issue::class.java).map { createLink(it) }
-
-}
-
-fun <T : Annotation> getAnnotationsOnMethod(description: org.junit.runner.Description, clazz: Class<T>): List<T> {
-    return listOfNotNull(description.getAnnotation(clazz)) + extractRepeatable(clazz)
-}
-
-fun <T : Annotation> getAnnotationsOnClass(description: org.junit.runner.Description, clazz: Class<T>): List<T> {
-    return listOfNotNull(description.testClass.getAnnotation(clazz))
-}
-
 @Suppress("UNUSED_PARAMETER")
 fun <T : Annotation> extractRepeatable(clazz: Class<T>): List<T> {
     // TODO: support Repeatable
@@ -67,8 +67,8 @@ fun getPackage(testClass: Class<*>): String {
     return testClass.`package`.name
 }
 
-fun getHistoryId(description: org.junit.runner.Description): String {
-    return BigInteger(1, md5(description.className + description.methodName)).toString(16)
+fun org.junit.runner.Description.getHistoryId(): String {
+    return BigInteger(1, md5(className + methodName)).toString(16)
 }
 
 fun md5(source: String): ByteArray {

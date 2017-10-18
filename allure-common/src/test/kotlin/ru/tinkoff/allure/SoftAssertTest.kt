@@ -3,14 +3,13 @@ package ru.tinkoff.allure
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.`is`
 import org.junit.After
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.tinkoff.allure.SoftAssert.Companion.softly
-import ru.tinkoff.allure.Step.Companion.step
 import ru.tinkoff.allure.model.Status
 import ru.tinkoff.allure.model.StepResult
 import ru.tinkoff.allure.model.TestResult
+import kotlin.test.assertTrue
+import kotlin.test.fail
 
 /**
  * @author Badya on 01.06.2017.
@@ -21,8 +20,8 @@ class SoftAssertTest {
     fun after() {
         fun verify(it: TestResult) {
             fun checkStepResult(stepResult: StepResult, text: String) {
-                Assert.assertTrue(stepResult.statusDetails?.message!!.contains(text))
-                Assert.assertTrue(stepResult.status!! == Status.FAILED)
+                assertTrue(stepResult.statusDetails?.message!!.contains(text))
+                assertTrue(stepResult.status!! == Status.FAILED)
             }
 
             if (it.fullName!!.contains("check_soft_asserted_after_test")) {
@@ -42,7 +41,7 @@ class SoftAssertTest {
     @Test
     fun no_softAssert_usage() {
         step("The Only One") {
-            Assert.assertTrue(true)
+            assertTrue(true)
         }
     }
 
@@ -56,7 +55,7 @@ class SoftAssertTest {
         step("The Only One") {
             softly { checkThat("FirstAssert", true, `is`(false)) }
             val assertedSoftly = true
-            Assert.assertTrue(assertedSoftly)
+            assertTrue(assertedSoftly)
         }
     }
 
@@ -64,7 +63,7 @@ class SoftAssertTest {
     fun soft_asserts_with_hard_fail_test() {
         step("The Only One") {
             softly { checkThat("FirstAssert", true, `is`(false)) }
-            Assert.fail("Fail test")
+            fail("Fail test")
         }
     }
 
