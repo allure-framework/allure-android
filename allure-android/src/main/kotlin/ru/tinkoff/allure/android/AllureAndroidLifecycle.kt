@@ -20,6 +20,6 @@ fun obtainDirectory(path: String): File {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         return File(Environment.getExternalStorageDirectory(), path)
     } else {
-        return getInstrumentation().context.getDir(path, Context.MODE_WORLD_READABLE)
+        return getInstrumentation().context.getDir(path, Context.MODE_PRIVATE)
     }
 }
