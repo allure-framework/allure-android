@@ -1,13 +1,31 @@
-apply plugin: "kotlin"
+apply from: "${rootDir}/gradle/plugin/maven.gradle"
+apply plugin: 'kotlin'
+
+buildscript {
+    apply from: '../gradle/versions.gradle'
+    apply from: '../gradle/common.gradle'
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+    }
+}
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     compile "com.google.code.gson:gson:${gsonVersion}"
 
-    testCompile "junit:junit:${jUnitVersion}"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
 }
 
 sourceSets {
-    main.java.srcDirs += "src/main/kotlin"
+    main.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
+}
+
+task copyLibs(type: Copy) {
+    from configurations.compile
+    from configurations.testCompile
+    into 'libs'
 }

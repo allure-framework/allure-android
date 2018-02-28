@@ -1,0 +1,4 @@
+<resources>
+    <string name="crash">CRASH</string>
+    <string name="rx_crash">RX CRASH</string>
+</resources>

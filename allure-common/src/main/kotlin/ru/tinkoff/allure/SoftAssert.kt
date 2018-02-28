@@ -23,34 +23,26 @@ inline fun softly(block: SoftAssert.() -> Unit) {
 class SoftAssert {
     private val errorsMap = mutableMapOf<String, MutableList<Throwable>>()
 
-    fun verify() {
-        errorsMap.forEach { (uuid, errList) ->
-            AllureStorage.get(uuid, ExecutableItem::class.java).apply {
-                run {
-                    try {
-                        MultipleFailureException.assertEmpty(errList)
-                    } catch (t: Throwable) {
-                        status = Status.FAILED
-                        statusDetails = StatusDetails.fromThrowable(t)
-                    }
-                }
-            }
-            AllureStorage.get(AllureStorage.getTest(), TestResult::class.java).apply { status = Status.FAILED }
-        }
-    }
-
-    private inline fun checkSucceeds(callable: () -> Unit): Unit {
+    @JvmOverloads
+    fun <T> checkThat(reason: String = "", value: T, matcher: Matcher<T>) {
         try {
-            callable()
+            assertThat(reason, value, matcher)
         } catch (t: Throwable) {
             addError(t)
         }
     }
 
-    @JvmOverloads
-    fun <T> checkThat(reason: String = "", value: T, matcher: Matcher<T>) {
-        checkSucceeds {
-            assertThat(reason, value, matcher)
+    fun verify() {
+        errorsMap.forEach { (uuid, errList) ->
+            AllureStorage.get(uuid, ExecutableItem::class.java).apply {
+                try {
+                    MultipleFailureException.assertEmpty(errList)
+                } catch (t: Throwable) {
+                    status = Status.FAILED
+                    statusDetails = StatusDetails.fromThrowable(t)
+                }
+            }
+            AllureStorage.get(AllureStorage.getTest(), TestResult::class.java).apply { status = Status.FAILED }
         }
     }
 

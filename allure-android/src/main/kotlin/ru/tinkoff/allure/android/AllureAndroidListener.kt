@@ -1,35 +1,70 @@
 package ru.tinkoff.allure.android
 
-import android.support.annotation.Keep
-import android.support.test.InstrumentationRegistry.getInstrumentation
+import android.support.test.internal.runner.listener.InstrumentationRunListener
 import android.support.test.uiautomator.UiDevice
 import org.junit.runner.Description
 import org.junit.runner.Result
-import ru.tinkoff.allure.AllureLifecycle
+import org.junit.runner.notification.Failure
 import ru.tinkoff.allure.AllureRunListener
+import ru.tinkoff.allure.model.Status
+import ru.tinkoff.allure.model.StatusDetails
 
 /**
  * @author Badya on 05.06.2017.
  */
+class AllureAndroidListener : InstrumentationRunListener() {
+    private val lifecycle = AllureAndroidLifecycle
+    private val allureListenerDelegate = AllureRunListener(lifecycle)
 
-@Keep
-class AllureAndroidListener : AllureRunListener() {
-    override val lifecycle: AllureLifecycle
-        get() = AllureAndroidLifecycle
-
-    override fun testRunStarted(description: Description) {
-        grantPermissions()
-        super.testRunStarted()
+    override fun testStarted(description: Description) {
+        allureListenerDelegate.testStarted(description)
     }
 
-    override fun testRunFinished(result: Result) {
-        super.testRunFinished()
+    override fun testFinished(description: Description) {
+        allureListenerDelegate.testFinished(description)
+    }
+
+    override fun testFailure(failure: Failure) {
+        if (failure.description.isTest) {
+            val uuid = "${failure.description.className}#${failure.description.methodName}"
+            testFailed(uuid, failure)
+        } else {
+            suiteFailed(failure)
+        }
+    }
+
+    override fun testRunStarted(description: Description?) {
+        grantPermissions()
+        allureListenerDelegate.testRunStarted()
+    }
+
+    override fun testRunFinished(result: Result?) {
+        allureListenerDelegate.testRunFinished()
+    }
+
+    private fun testFailed(uuid: String, failure: Failure) {
+        with(lifecycle) {
+            updateTestCase(uuid) {
+                status = Status.fromThrowable(failure.exception)
+                statusDetails = StatusDetails.fromThrowable(failure.exception)
+            }
+            writeTestCase(uuid)
+        }
+    }
+
+    private fun suiteFailed(failure: Failure) {
+        failure.description.children.forEach {
+            val uuid = "${it.className}#${it.methodName}"
+            testFailed(uuid, failure)
+        }
     }
 
     private fun grantPermissions() {
-        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().context.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
-        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().targetContext.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
-        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().context.packageName + " android.permission.READ_EXTERNAL_STORAGE")
-        UiDevice.getInstance(getInstrumentation()).executeShellCommand("pm grant " + getInstrumentation().targetContext.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+        with(UiDevice.getInstance(instrumentation)) {
+            executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
+            executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
+            executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+            executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+        }
     }
 }

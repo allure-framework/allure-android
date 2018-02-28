@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
  * @author Badya on 01.06.2017.
  */
 class GsonSerializationProcessorTest {
-    val testResult =
+    private val testResult =
             TestResult(
                     uuid = "0123456789ABCDEF",
                     name = "Test",
@@ -22,12 +22,11 @@ class GsonSerializationProcessorTest {
                     labels = listOf(Label(name = "label", value = "value"))
             )
 
-    @Rule
-    @JvmField
+    @get:Rule
     val tempFolder = TemporaryFolder()
 
     @Test
-    fun serializeTestResult() =
+    fun `serialize TestResult`() =
             assertEquals(
                     """{
                       |  "uuid": "${testResult.uuid}",
@@ -49,13 +48,12 @@ class GsonSerializationProcessorTest {
                       |  "attachments": [],
                       |  "parameters": []
                       |}""".trimMargin(),
-                    GsonSerializationProcessor.serialize(testResult),
-                    "Serialize TestResult failed"
+                    GsonSerializationProcessor.serialize(testResult), "Serialize TestResult failed"
             )
 
 
     @Test
-    fun deserializeTestResult() {
+    fun `deserialize TestResult`() {
         val deserialized = GsonSerializationProcessor.deserialize(GsonSerializationProcessor.serialize(testResult), TestResult::class.java)
 
         assertEquals(testResult.uuid, deserialized.uuid)

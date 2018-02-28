@@ -21,8 +21,8 @@ enum class Status(val s: String) {
         @JvmStatic
         fun fromThrowable(e: Throwable?): Status {
             when (e) {
-                is AssertionError -> return FAILED
-                else -> return BROKEN
+                is AssertionError -> return Status.FAILED
+                else -> return Status.BROKEN
             }
         }
     }

@@ -10,13 +10,11 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * @author Badya on 18.04.2017.
  */
-object AllureStorage {
+internal object AllureStorage {
     private val storage: MutableMap<String, Any> = ConcurrentHashMap()
 
     private val currentStepContext: ThreadLocal<LinkedList<String?>> = object : InheritableThreadLocal<LinkedList<String?>>() {
-        public override fun initialValue(): LinkedList<String?> {
-            return LinkedList()
-        }
+        public override fun initialValue() = LinkedList<String?>()
     }
 
     fun getCurrentStep(): String {
@@ -52,11 +50,11 @@ object AllureStorage {
         get(parentUUID, WithSteps::class.java).steps.add(stepResult)
     }
 
-    fun removeStep(uuid: String?): StepResult {
+    fun removeStep(uuid: String?): StepResult? {
         return remove(uuid, StepResult::class.java)
     }
 
-    fun getContainer(uuid: String?): TestResultContainer {
+    fun getContainer(uuid: String?): TestResultContainer? {
         return get(uuid, TestResultContainer::class.java)
     }
 
@@ -64,11 +62,11 @@ object AllureStorage {
         put(container.uuid, container)
     }
 
-    fun removeContainer(uuid: String?): TestResultContainer {
+    fun removeContainer(uuid: String?): TestResultContainer? {
         return remove(uuid, TestResultContainer::class.java)
     }
 
-    fun getTestResult(uuid: String?): TestResult {
+    fun getTestResult(uuid: String?): TestResult? {
         return get(uuid, TestResult::class.java)
     }
 
@@ -76,7 +74,7 @@ object AllureStorage {
         put(testResult.uuid, testResult)
     }
 
-    fun removeTestResult(uuid: String?): TestResult {
+    fun removeTestResult(uuid: String?): TestResult? {
         return remove(uuid, TestResult::class.java)
     }
 
@@ -88,14 +86,12 @@ object AllureStorage {
 
     internal fun <T> get(uuid: String?, type: Class<out T>): T {
         val key = requireNotNull(uuid) { "Failed to get item from storage: uuid can't be null" }
-        val any: Any = requireNotNull(storage[key]) { "Failed to get item from storage: $type by $uuid" }
-        return type.cast(any)
+        return type.cast(storage[key])
     }
 
     internal fun <T> remove(uuid: String?, type: Class<out T>): T {
-        val key = requireNotNull(uuid) { "Failed to remove item from storage: uuid can't be null" }
-        val any: Any = requireNotNull(storage.remove(key)) { "Failed to remove item from storage: $type by $uuid" }
-        return type.cast(any)
+        val key = requireNotNull(uuid, { "Failed to remove item from storage: uuid can't be null" })
+        return type.cast(storage.remove(key))
     }
 
 

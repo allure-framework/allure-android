@@ -10,18 +10,14 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * @author Badya on 01.06.2017.
+ * @author b.mukvich on 01.06.2017.
  */
-open class AllureRunListener : RunListener() {
-    protected val mainContainer = object : InheritableThreadLocal<String>() {
-        public override fun initialValue(): String {
-            return UUID.randomUUID().toString()
-        }
+open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureCommonLifecycle) : RunListener() {
+    private val mainContainer = object : InheritableThreadLocal<String>() {
+        public override fun initialValue() = UUID.randomUUID().toString()
     }
 
-    protected val containers = ConcurrentHashMap<String, TestResultContainer>()
-
-    protected open val lifecycle: AllureLifecycle by lazy { AllureCommonLifecycle }
+    private val containers = ConcurrentHashMap<String, TestResultContainer>()
 
     /**
      * Called before any tests have been run. This may be called on an
@@ -70,15 +66,16 @@ open class AllureRunListener : RunListener() {
     override fun testStarted(description: Description) {
         // val uuid = AllureStorage.getTest()
         val testResult = TestResult(
-                historyId = description.getHistoryId(),
-                name = description.getMethodDisplayName(),
+                uuid = "${description.className}#${description.methodName}",
+                historyId = getHistoryId(description),
+                name = getMethodDisplayName(description),
                 fullName = "${description.className}.${description.methodName}",
-                links = description.getLinks(),
+                links = getLinks(description),
                 labels = listOf(
                         Label("package", getPackage(description.testClass)),
                         Label("testClass", description.className),
                         Label("testMethod", description.methodName),
-                        Label("suite", description.className))
+                        Label("suite", getClassDisplayName(description)))
                 // TODO: Labels
                 // result.getLabels().addAll(getLabels(description));
         )
@@ -152,20 +149,20 @@ open class AllureRunListener : RunListener() {
         //not implemented
     }
 
-    protected fun finalizeContainer(container: String?) {
+    protected open fun finalizeContainer(container: String?) {
         with(lifecycle) {
             stopTestContainer(container)
             writeTestContainer(container)
         }
     }
 
-    protected fun getContainer(description: Description): TestResultContainer {
+    protected open fun getContainer(description: Description): TestResultContainer {
         return containers[description.className] ?: createContainer(description)
     }
 
-    protected fun createContainer(description: Description): TestResultContainer {
+    protected open fun createContainer(description: Description): TestResultContainer {
         val container = TestResultContainer(
-                name = description.getClassDisplayName(),
+                name = getClassDisplayName(description),
                 start = System.currentTimeMillis()
         )
 

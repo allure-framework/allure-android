@@ -14,67 +14,59 @@ class LogCatListener : ContainerLifecycleListener, TestLifecycleListener, StepLi
     }
 
     override fun beforeContainerStart(container: TestResultContainer) {
-        debug(Event.START, container)
+        debug("START", container)
     }
 
     override fun beforeContainerUpdate(container: TestResultContainer) {
-        debug(Event.UPDATE, container)
+        debug("UPDATE", container)
     }
 
     override fun beforeContainerStop(container: TestResultContainer) {
-        debug(Event.STOP, container)
+        debug("STOP", container)
     }
 
     override fun beforeContainerWrite(container: TestResultContainer) {
-        debug(Event.WRITE, container)
+        debug("WRITE", container)
     }
 
     override fun beforeTestSchedule(result: TestResult) {
-        debug(Event.SCHEDULE, result)
+        debug("SCHEDULE", result)
     }
 
     override fun beforeTestStart(result: TestResult) {
-        debug(Event.START, result)
+        debug("START", result)
     }
 
     override fun beforeTestUpdate(result: TestResult) {
-        debug(Event.UPDATE, result)
+        debug("UPDATE", result)
     }
 
     override fun beforeTestStop(result: TestResult) {
-        debug(Event.STOP, result)
+        debug("STOP", result)
     }
 
     override fun beforeTestWrite(result: TestResult) {
-        debug(Event.WRITE, result)
+        debug("WRITE", result)
     }
 
     override fun beforeStepStart(result: StepResult) {
-        debug(Event.START, result)
+        debug("START", result)
     }
 
     override fun beforeStepUpdate(result: StepResult) {
-        debug(Event.UPDATE, result)
+        debug("UPDATE", result)
     }
 
     override fun beforeStepStop(result: StepResult) {
-        debug(Event.STOP, result)
+        debug("STOP", result)
     }
 
-    private fun debug(event: Event, entity: Any) {
+    private fun debug(action: String, entity: Any) {
         Log.d(TAG, when (entity) {
-            is TestResult          -> "${event.name} test: ${entity.uuid} (${entity.fullName})"
-            is TestResultContainer -> "${event.name} container: ${entity.uuid}"
-            is StepResult          -> "${event.name} step: ${entity.uuid}"
-            else                   -> ""
+            is TestResult -> "$action test: ${entity.uuid} (${entity.fullName})"
+            is TestResultContainer -> "$action container: ${entity.uuid}"
+            is StepResult -> "$action step: ${entity.uuid}"
+            else -> ""
         })
-    }
-
-    enum class Event {
-        SCHEDULE,
-        START,
-        UPDATE,
-        STOP,
-        WRITE
     }
 }

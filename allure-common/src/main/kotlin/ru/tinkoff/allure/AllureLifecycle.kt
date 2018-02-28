@@ -1,22 +1,8 @@
 package ru.tinkoff.allure
 
-import ru.tinkoff.allure.io.AllureFileConstants
-import ru.tinkoff.allure.io.AllureResultsReader
-import ru.tinkoff.allure.io.AllureResultsWriter
-import ru.tinkoff.allure.io.FileSystemResultsReader
-import ru.tinkoff.allure.io.FileSystemResultsWriter
-import ru.tinkoff.allure.listener.ContainerLifecycleListener
-import ru.tinkoff.allure.listener.ContainerLifecycleNotifier
-import ru.tinkoff.allure.listener.StepLifecycleListener
-import ru.tinkoff.allure.listener.StepLifecycleNotifier
-import ru.tinkoff.allure.listener.TestLifecycleListener
-import ru.tinkoff.allure.listener.TestLifecycleNotifier
-import ru.tinkoff.allure.model.Attachment
-import ru.tinkoff.allure.model.Stage
-import ru.tinkoff.allure.model.StepResult
-import ru.tinkoff.allure.model.TestResult
-import ru.tinkoff.allure.model.TestResultContainer
-import ru.tinkoff.allure.model.WithAttachments
+import ru.tinkoff.allure.io.*
+import ru.tinkoff.allure.listener.*
+import ru.tinkoff.allure.model.*
 import java.io.File
 import java.util.*
 
@@ -47,7 +33,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun updateTestContainer(uuid: String?, update: TestResultContainer.() -> Unit) {
-        AllureStorage.getContainer(uuid).apply {
+        AllureStorage.getContainer(uuid)?.apply {
             beforeContainerUpdate(this)
             update()
             afterContainerUpdate(this)
@@ -55,7 +41,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun stopTestContainer(uuid: String?) {
-        AllureStorage.getContainer(uuid).apply {
+        AllureStorage.getContainer(uuid)?.apply {
             beforeContainerStop(this)
             stop = System.currentTimeMillis()
             afterContainerStop(this)
@@ -63,7 +49,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun writeTestContainer(uuid: String?) {
-        AllureStorage.removeContainer(uuid).apply {
+        AllureStorage.removeContainer(uuid)?.apply {
             beforeContainerWrite(this)
             writer.write(this)
             afterContainerWrite(this)
@@ -86,7 +72,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun startTestCase(uuid: String) {
-        AllureStorage.getTestResult(uuid).apply {
+        AllureStorage.getTestResult(uuid)?.apply {
             beforeTestStart(this)
             stage = Stage.RUNNING
             start = System.currentTimeMillis()
@@ -101,7 +87,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun updateTestCase(uuid: String, update: TestResult.() -> Unit) {
-        AllureStorage.getTestResult(uuid).apply {
+        AllureStorage.getTestResult(uuid)?.apply {
             beforeTestUpdate(this)
             update()
             afterTestUpdate(this)
@@ -111,11 +97,11 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     open fun stopTestCase() = stopTestCase(AllureStorage.getTest())
 
     open fun stopTestCase(uuid: String) {
-        AllureStorage.getTestResult(uuid).apply {
+        AllureStorage.getTestResult(uuid)?.apply {
             beforeTestStop(this)
             stage = Stage.FINISHED
             stop = System.currentTimeMillis()
-            status = determineStatus()
+            calcStatus()
             steps.forEach { AllureStorage.remove(it.uuid, StepResult::class.java) }
             afterTestStop(this)
         }
@@ -125,7 +111,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     open fun writeTestCase() = writeTestCase(AllureStorage.getTest())
 
     open fun writeTestCase(uuid: String) {
-        AllureStorage.removeTestResult(uuid).apply {
+        AllureStorage.getTestResult(uuid)?.apply {
             beforeTestWrite(this)
             writer.write(this)
             afterTestWrite(this)
@@ -165,7 +151,6 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
             beforeStepStop(this)
             stage = Stage.FINISHED
             stop = System.currentTimeMillis()
-            status = determineStatus()
             AllureStorage.stopStep()
             afterStepStop(this)
         }
@@ -176,7 +161,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun prepareAttachment(name: String?, type: String?, fileExtension: String?): File {
-        val fileName = AllureFileConstants.generateAttachmentFileName(UUID.randomUUID().toString(), fileExtension)
+        val fileName = generateAttachmentFileName(UUID.randomUUID().toString(), fileExtension)
         val uuid = AllureStorage.getCurrentStep()
         val attachment = Attachment(
                 name = if (name.isNullOrBlank()) null else name,

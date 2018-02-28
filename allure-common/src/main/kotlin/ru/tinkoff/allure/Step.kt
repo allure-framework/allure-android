@@ -6,10 +6,10 @@ import ru.tinkoff.allure.model.StatusDetails
 import ru.tinkoff.allure.model.StepResult
 
 /**
- * @author Badya on 31.05.2017.
+ * @author b.mukvich on 31.05.2017.
  */
 
-inline fun <T> step(description: String, vararg params: Parameter, block: () -> T): T {
+inline fun <T : Any?> step(description: String, vararg params: Parameter, block: () -> T): T {
     with(Step()) {
         val result: T
         stepStart(description, *params)
@@ -27,7 +27,7 @@ inline fun <T> step(description: String, vararg params: Parameter, block: () -> 
 }
 
 class Step {
-    // todo: CommonLifecycle works on Android, only 'cause steps don't call writer
+    // todo: commonLifecycle works on Android, only 'cause steps don't call writer
     private val lifecycle: AllureLifecycle = AllureCommonLifecycle
 
     fun stepCompleted() =

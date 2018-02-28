@@ -32,11 +32,11 @@
     ajc* <methods>;
 }
 
--keepnames class ru.tinkoff.mobileutils.** { *; }
--keepnames class ru.tinkoff.mobileutils.allure.** { *; }
--keepnames class ru.tinkoff.mobileutils.utils.** { *; }
--keepnames interface ru.tinkoff.mobileutils.** { *; }
--keep class ru.tinkoff.mobileutils.** { *; }
--keep class ru.tinkoff.mobileutils.allure.** { *; }
--keep class ru.tinkoff.mobileutils.utils.** { *; }
--keep interface ru.tinkoff.mobileutils.** { *; }
+-keepnames class ru.tinkoff.** { *; }
+-keepnames class ru.tinkoff.allure.** { *; }
+-keepnames class ru.tinkoff.utils.** { *; }
+-keepnames interface ru.tinkoff.** { *; }
+-keep class ru.tinkoff.** { *; }
+-keep class ru.tinkoff.allure.** { *; }
+-keep class ru.tinkoff.utils.** { *; }
+-keep interface ru.tinkoff.** { *; }
