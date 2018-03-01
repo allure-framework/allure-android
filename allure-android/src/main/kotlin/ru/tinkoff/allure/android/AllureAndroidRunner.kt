@@ -12,7 +12,11 @@ import android.support.test.runner.AndroidJUnitRunner
 @Keep
 open class AllureAndroidRunner : AndroidJUnitRunner() {
     override fun onCreate(arguments: Bundle) {
-        arguments.putCharSequence("listener", AllureAndroidListener::class.java.name)
+        arguments.putCharSequence("listener", arguments.getCharSequence("listener")
+                ?.let {
+                    "$it,${AllureAndroidListener::class.java.name}"
+                }
+                ?: AllureAndroidListener::class.java.name)
         super.onCreate(arguments)
     }
 }
