@@ -1,4 +1,3 @@
-apply from: "${rootDir}/gradle/plugin/maven.gradle"
 apply plugin: 'kotlin'
 
 buildscript {
