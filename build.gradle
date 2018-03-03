@@ -1,32 +1,13 @@
-apply from: "gradle/common.gradle"
-apply from: "gradle/versions.gradle"
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.1"
-}
-
-buildscript{
-    apply from: "gradle/versions.gradle"
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:${androidPlugin}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-    }
-}
+apply from: 'gradle/common.gradle'
+apply from: 'gradle/versions.gradle'
 
 allprojects {
+    apply plugin: "idea"
     repositories {
-        jcenter()
-        mavenCentral()
         google()
+        jcenter()
     }
 
-    apply plugin: "idea"
-
-    group "ru.tinkoff.allure"
-    version = "2.3.0"
+    group 'ru.tinkoff.allure'
+    version = rootProject.projectVersion
 }

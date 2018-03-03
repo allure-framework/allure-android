@@ -1,5 +1,6 @@
 # IDEA
-.idea
+.idea/*
+!.idea/runConfigurations/
 *.iml
 
 # Gradle
@@ -9,3 +10,4 @@ build
 
 # Other
 .DS_Store
+

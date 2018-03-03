@@ -12,7 +12,7 @@ import kotlin.test.assertTrue
 @RunWith(AllureRunner::class)
 class StepTest {
     @Test
-    fun testParamsInsideStep() {
+    fun `params inside step`() {
         val login = "login"
         val pass = "password"
         val stepInvocation = testStep(login, pass)
@@ -28,9 +28,12 @@ class StepTest {
         assertEquals("$login $pass", stepInvocation)
     }
 
-    fun testStep(login: String, pass: String) = step("loginStep", Parameter(name = "login", value = login), Parameter(name = "password", value = pass)) {
+    private fun testStep(login: String, pass: String) = step(
+            "loginStep",
+            Parameter(name = "login", value = login),
+            Parameter(name = "password", value = pass)) {
         doLogin(login, pass)
     }
 
-    fun doLogin(login: String, pass: String) = "$login $pass"
+    private fun doLogin(login: String, pass: String) = "$login $pass"
 }

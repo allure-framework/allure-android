@@ -5,65 +5,47 @@ import java.util.*
 /**
  * @author Badya on 18.04.2017.
  */
-object AllureFileConstants {
-    @JvmField
-    val TEST_RESULT_FILE_SUFFIX = "-result.json"
-    @JvmField
-    val TEST_RESULT_FILE_PATTERN = ".+-result.json".toRegex()
-    @JvmField
-    val TEST_RESULT_FILE_GLOB = "*-result.json"
-    @JvmField
-    val TEST_RESULT_CONTAINER_FILE_SUFFIX = "-container.json"
-    @JvmField
-    val TEST_RESULT_CONTAINER_FILE_PATTERN = ".+-container.json".toRegex()
-    @JvmField
-    val TEST_RESULT_CONTAINER_FILE_GLOB = "*-container.json"
-    @JvmField
-    val TEST_RUN_FILE_SUFFIX = "-testrun.json"
-    @JvmField
-    val TEST_RUN_FILE_GLOB = "*-testrun.json"
-    @JvmField
-    val ATTACHMENT_FILE_SUFFIX = "-attachment"
-    @JvmField
-    val ATTACHMENT_FILE_PATTERN = ".+-attachment.*".toRegex()
-    @JvmField
-    val TXT_EXTENSION = ".txt"
-    @JvmField
-    val TEXT_PLAIN = "text/plain"
-    @JvmField
-    val PNG_EXTENSION = ".png"
-    @JvmField
-    val IMAGE_PNG = "image/png"
+const val TEST_RESULT_FILE_SUFFIX = "-result.json"
 
-    @JvmStatic
-    fun generateTestResultName(uuid: String): String {
-        return uuid + TEST_RESULT_FILE_SUFFIX
-    }
+val TEST_RESULT_FILE_PATTERN = ".+-result.json".toRegex()
 
-    @JvmStatic
-    fun generateTestResultName(): String {
-        return generateTestResultName(UUID.randomUUID().toString())
-    }
+const val TEST_RESULT_FILE_GLOB = "*-result.json"
 
-    @JvmStatic
-    fun generateTestResultContainerName(): String {
-        return generateTestResultContainerName(UUID.randomUUID().toString())
-    }
+const val TEST_RESULT_CONTAINER_FILE_SUFFIX = "-container.json"
 
-    @JvmStatic
-    fun generateTestResultContainerName(uuid: String): String {
-        return uuid + TEST_RESULT_CONTAINER_FILE_SUFFIX
-    }
+val TEST_RESULT_CONTAINER_FILE_PATTERN = ".+-container.json".toRegex()
 
-    @JvmStatic
-    fun generateAttachmentFileName(uuid: String, fileExtension: String?): String {
-        return uuid + ATTACHMENT_FILE_SUFFIX + getExtension(fileExtension)
-    }
+const val TEST_RESULT_CONTAINER_FILE_GLOB = "*-container.json"
 
-    fun getExtension(fileExtension: String?): String {
-        if (fileExtension.isNullOrBlank()) {
-            return ""
-        }
-        return if (fileExtension?.get(0) == '.') fileExtension else ".$fileExtension"
+const val TEST_RUN_FILE_SUFFIX = "-testrun.json"
+
+const val TEST_RUN_FILE_GLOB = "*-testrun.json"
+
+const val ATTACHMENT_FILE_SUFFIX = "-attachment"
+
+val ATTACHMENT_FILE_PATTERN = ".+-attachment.*".toRegex()
+
+const val TXT_EXTENSION = ".txt"
+
+const val TEXT_PLAIN = "text/plain"
+
+const val PNG_EXTENSION = ".png"
+
+const val IMAGE_PNG = "image/png"
+
+fun generateTestResultName(uuid: String) = uuid + TEST_RESULT_FILE_SUFFIX
+
+fun generateTestResultName() = generateTestResultName(UUID.randomUUID().toString())
+
+fun generateTestResultContainerName() = generateTestResultContainerName(UUID.randomUUID().toString())
+
+fun generateTestResultContainerName(uuid: String) = uuid + TEST_RESULT_CONTAINER_FILE_SUFFIX
+
+fun generateAttachmentFileName(uuid: String, fileExtension: String?) = uuid + ATTACHMENT_FILE_SUFFIX + getExtension(fileExtension)
+
+fun getExtension(fileExtension: String?): String {
+    if (fileExtension.isNullOrBlank()) {
+        return ""
     }
+    return if (fileExtension?.get(0) == '.') fileExtension else ".$fileExtension"
 }

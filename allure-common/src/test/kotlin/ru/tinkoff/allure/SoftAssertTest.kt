@@ -1,7 +1,7 @@
 package ru.tinkoff.allure
 
-import org.hamcrest.Matchers
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.isEmptyOrNullString
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -11,20 +11,21 @@ import ru.tinkoff.allure.model.TestResult
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
+
 /**
- * @author Badya on 01.06.2017.
+ * @author b.mukvich on 01.06.2017.
  */
 @RunWith(AllureRunner::class)
 class SoftAssertTest {
     @After
     fun after() {
-        fun verify(it: TestResult) {
+        fun verify(it: TestResult?) {
             fun checkStepResult(stepResult: StepResult, text: String) {
-                assertTrue(stepResult.statusDetails?.message!!.contains(text))
-                assertTrue(stepResult.status!! == Status.FAILED)
+                assertTrue { stepResult.statusDetails?.message!!.contains(text) }
+                assertTrue { stepResult.status!! == Status.FAILED }
             }
 
-            if (it.fullName!!.contains("check_soft_asserted_after_test")) {
+            if (it?.fullName!!.contains("check_soft_asserted_after_test")) {
                 checkStepResult(it.steps[0], "FirstAssert")
             } else if (it.fullName!!.contains("each_step_has_own_softAsserts")) {
                 checkStepResult(it.steps[0], "FirstAssert")
@@ -39,58 +40,60 @@ class SoftAssertTest {
     }
 
     @Test
-    fun no_softAssert_usage() {
+    fun `no SoftAssert usage`() {
         step("The Only One") {
-            assertTrue(true)
+            assertTrue { true }
         }
     }
 
     @Test
-    fun softAssert_in_test() {
-        softly { checkThat("FirstAssert", true, `is`(false)) }
+    fun `softAssert inTest`() {
+        softly { checkThat("FirstAssert", true, equalTo(false)) }
     }
 
     @Test
-    fun check_soft_asserted_after_test() {
+    fun `softAsserted after test`() {
         step("The Only One") {
-            softly { checkThat("FirstAssert", true, `is`(false)) }
+            softly {
+                checkThat("FirstAssert", true, equalTo(false))
+            }
             val assertedSoftly = true
-            assertTrue(assertedSoftly)
+            assertTrue { assertedSoftly }
         }
     }
 
     @Test(expected = AssertionError::class)
-    fun soft_asserts_with_hard_fail_test() {
+    fun `softAssert with hardAssert fail test`() {
         step("The Only One") {
-            softly { checkThat("FirstAssert", true, `is`(false)) }
+            softly { checkThat("FirstAssert", true, equalTo(false)) }
             fail("Fail test")
         }
     }
 
     @Test
-    fun each_step_has_own_softAsserts() {
+    fun `each step has own softAsserts`() {
         step("First") {
-            softly { checkThat("FirstAssert", true, `is`(false)) }
+            softly { checkThat("FirstAssert", true, equalTo(false)) }
         }
         step("Second") {
-            softly { checkThat("SecondAssert", true, `is`(false)) }
+            softly { checkThat("SecondAssert", true, equalTo(false)) }
         }
     }
 
     @Test
-    fun nested_steps_has_own_softAsserts() {
+    fun `nested steps has own softAsserts`() {
         step("First") {
             step("Second") {
-                softly { checkThat("SecondAssert", true, `is`(false)) }
+                softly { checkThat("SecondAssert", true, equalTo(false)) }
             }
-            softly { checkThat("FirstAssert", true, `is`(false)) }
+            softly { checkThat("FirstAssert", true, equalTo(false)) }
         }
     }
 
     @Test
-    fun actual_can_be_null() {
+    fun `actual can be null`() {
         softly {
-            checkThat("Null check", null, Matchers.isEmptyOrNullString())
+            checkThat("Null check", null, isEmptyOrNullString())
         }
     }
 }
