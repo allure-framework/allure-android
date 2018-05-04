@@ -49,7 +49,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
     }
 
     fun testRunFinished() {
-        containers.keys.forEach {
+        Collections.list(containers.keys()).forEach {
             finalizeContainer(containers.remove(it)?.uuid)
         }
         finalizeContainer(mainContainer.get())
