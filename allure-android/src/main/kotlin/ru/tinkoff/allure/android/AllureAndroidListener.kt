@@ -1,5 +1,6 @@
 package ru.tinkoff.allure.android
 
+import android.os.Build
 import android.support.test.internal.runner.listener.InstrumentationRunListener
 import android.support.test.uiautomator.UiDevice
 import org.junit.runner.Description
@@ -60,11 +61,13 @@ class AllureAndroidListener : InstrumentationRunListener() {
     }
 
     private fun grantPermissions() {
-        with(UiDevice.getInstance(instrumentation)) {
-            executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
-            executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
-            executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.READ_EXTERNAL_STORAGE")
-            executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            with(UiDevice.getInstance(instrumentation)) {
+                executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
+                executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.WRITE_EXTERNAL_STORAGE")
+                executeShellCommand("pm grant " + instrumentation.context.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+                executeShellCommand("pm grant " + instrumentation.targetContext.packageName + " android.permission.READ_EXTERNAL_STORAGE")
+            }
         }
     }
 }
