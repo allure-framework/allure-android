@@ -1,7 +1,7 @@
 package ru.tinkoff.allure.android
 
 import android.os.Environment
-import androidx.test.InstrumentationRegistry.getInstrumentation
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import java.util.concurrent.TimeUnit
 
