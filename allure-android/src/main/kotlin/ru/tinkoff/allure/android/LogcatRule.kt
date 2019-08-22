@@ -6,6 +6,8 @@ import androidx.test.uiautomator.UiDevice
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
+import ru.tinkoff.allure.io.TEXT_PLAIN
+import ru.tinkoff.allure.io.TXT_EXTENSION
 
 class LogcatRule : TestRule {
     override fun apply(base: Statement, description: Description): Statement {
@@ -34,7 +36,7 @@ class LogcatRule : TestRule {
             val logcatResult = executeShellCommand("logcat -d")
             file.writeText(logcatResult)
         }
-        AllureAndroidLifecycle.addAttachment(name = "logcat", type = "text/html",
-                fileExtension = ".txt", file = file)
+        AllureAndroidLifecycle.addAttachment(name = "logcat", type = TEXT_PLAIN,
+                fileExtension = TXT_EXTENSION, file = file)
     }
 }
