@@ -3,6 +3,7 @@ package ru.tinkoff.allure.android
 import androidx.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import ru.tinkoff.allure.step
 import kotlin.test.assertTrue
@@ -14,7 +15,7 @@ import kotlin.test.fail
 @RunWith(AndroidJUnit4::class)
 class AllureTest {
     @get:Rule
-    val failshot = FailshotRule()
+    val ruleChain = RuleChain.outerRule(FailshotRule()).around(LogcatRule())
 
     @Test
     fun test1() = step("Step1") {
