@@ -15,7 +15,7 @@
 * [Documentation][docs]
 * [Gitter][gitter]
 
-[Allure][allure2] adapter for Android, written in Kotlin.
+[Allure][allure2] adapter for Android, which is written on Kotlin.
 
 ## Installation and Usage
 
@@ -51,13 +51,16 @@ Just use comandline tools from Android sdk:
 adb pull /sdcard/allure-results
 ```
 
-### Generate Report
-See [Allure Docs](https://docs.qameta.io/allure/2.0/#_reporting)
+### Generate allure report
+You can use `allure-commandline` for that, see [Allure Docs](https://docs.qameta.io/allure/2.0/#_reporting) for details, or generate report with [allure-gradle](https://github.com/allure-framework/allure-gradle/) plugin.
+
+### Compatibility with Android 8.0+ (API 26 or higher)
+Look at https://github.com/allure-framework/allure-android/issues/12#issuecomment-486558848 for more information.
 
 ## Features
 
 ### Steps
-Original [Steps](https://github.com/allure-framework/allure1/wiki/Steps) reworked:
+Original [Steps](https://github.com/allure-framework/allure1/wiki/Steps) were improved:
 * No more aspects required, `step` is an expression
 * Name required, but not limited with const value as in annotations
 
@@ -82,10 +85,9 @@ fun myStep(param: String) = step("Do something with $param") {
 
 ### Soft Assertions
 Soft Assertion can be used to continue test execution in case of minor assertion.
+`SoftAssert` reports assertion inside `Step` in which it raised.
 
-`SoftAssert` reports assertion inside `Step` it occured in.
-
-**SoftAssert marks test passed, result seen only in report**
+**SoftAssert marks test passed, result could be found only in report**
 
 DSL-style:
 ```kotlin
@@ -97,7 +99,7 @@ fun myStep() = step("MyStep") {
 ```
 
 ### Basic screenshot
-Screenshot using UIautomator, appending it to step, it was executed in.
+Screenshot uses UIautomator and appends it to step, in which it was executed
 
 ```kotlin
 @Test
@@ -131,10 +133,10 @@ class MyTest {
 ```
 
 ### Allure annotations
-You can use some allure annotation
+You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`, `@SeverityLevel` and others.
 
 ## Contributing to allure-android
-This project exists thanks to all the people who contribute. Especially by [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
+Thanks to all the people who contributed. Especially [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
 
 ## License
 Allure Android is released under version 2.0 of the [Apache License][license]
