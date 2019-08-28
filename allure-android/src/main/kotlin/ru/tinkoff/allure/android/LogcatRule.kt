@@ -14,23 +14,23 @@ class LogcatRule : TestRule {
         return object : Statement() {
             override fun evaluate() {
                 try {
-                    before()
+                    clearLogcat()
                     base.evaluate()
                 } catch (t: Throwable) {
-                    after()
+                    dumpLogcat()
                     throw t
                 }
             }
         }
     }
 
-    private fun before() {
+    private fun clearLogcat() {
         with(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())) {
             executeShellCommand("logcat -c")
         }
     }
 
-    private fun after() {
+    private fun dumpLogcat() {
         val file = createAttachmentFile()
         with(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())) {
             val logcatResult = executeShellCommand("logcat -d")

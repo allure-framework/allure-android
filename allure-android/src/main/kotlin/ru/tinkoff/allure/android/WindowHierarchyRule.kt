@@ -8,6 +8,7 @@ import org.junit.runners.model.Statement
 import ru.tinkoff.allure.io.TEXT_XML
 import ru.tinkoff.allure.io.XML_EXTENSION
 import ru.tinkoff.allure.utils.createAttachmentFile
+import java.util.concurrent.TimeUnit
 
 class WindowHierarchyRule : TestRule {
     override fun apply(base: Statement, description: Description): Statement {
@@ -16,19 +17,20 @@ class WindowHierarchyRule : TestRule {
                 try {
                     base.evaluate()
                 } catch (t: Throwable) {
-                    after()
+                    dumpWindowHierarchy()
                     throw t
                 }
             }
         }
     }
 
-    private fun after() {
+    private fun dumpWindowHierarchy() {
         val file = createAttachmentFile()
         with(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())) {
+            waitForIdle(TimeUnit.SECONDS.toMillis(5))
             dumpWindowHierarchy(file)
         }
-        AllureAndroidLifecycle.addAttachment(name = "window_hierarchy", type = TEXT_XML,
+        AllureAndroidLifecycle.addAttachment(name = "hierarchy", type = TEXT_XML,
                 fileExtension = XML_EXTENSION, file = file)
     }
 }
