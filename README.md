@@ -136,7 +136,7 @@ class MyTest {
 You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`, `@SeverityLevel` and others.
 
 ## Contributing to allure-android
-Thanks to all the people who contributed. Especially [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
+Thanks to all people who contributed. Especially [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
 
 ## License
 Allure Android is released under version 2.0 of the [Apache License][license]
