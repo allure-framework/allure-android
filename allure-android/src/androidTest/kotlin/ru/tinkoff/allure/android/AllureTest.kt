@@ -23,7 +23,8 @@ import kotlin.test.fail
 class AllureTest {
 
     @get:Rule
-    val ruleChain = RuleChain.outerRule(FailshotRule()).around(WindowHierarchyRule()).around(LogcatRule())
+    val ruleChain = RuleChain.outerRule(LogcatClearRule()).around(FailshotRule())
+            .around(WindowHierarchyRule()).around(LogcatDumpRule())
 
     @Test
     fun shouldAddGreenStep() = step("Step1") {
