@@ -108,7 +108,7 @@ fun test() {
 }
 ```
 
-### Failshot Rule
+### Failshot rule
 You can use `FailshotRule` to capture a screenshot in case of `Throwable` during test
 ```kotlin
 class MyTest {
@@ -120,13 +120,25 @@ class MyTest {
 }
 ```
 
-### Logcat Rule
-You can use `LogcatRule` to capture a device logs in case of `Throwable` during test
+### Logcat rule's
+You can use `LogcatDumpRule`, `LogcatClearRule` to clear and capture a device logs in case of `Throwable` during test
 ```kotlin
 class MyTest {
 
     @get:Rule
-    val logcatRule = LogcatRule()
+    val ruleChain = RuleChain.outerRule(LogcatClearRule()).around(LogcatDumpRule())
+
+    // ...
+}
+```
+
+### Window hierarchy rule
+You can use `WindowHierarchyRule` to capture a window hierarchy via UIautomator in case of `Throwable` during test
+```kotlin
+class MyTest {
+
+    @get:Rule
+    val windowHierarchyRule = WindowHierarchyRule()
 
     // ...
 }

@@ -9,24 +9,17 @@ import ru.tinkoff.allure.io.TEXT_PLAIN
 import ru.tinkoff.allure.io.TXT_EXTENSION
 import ru.tinkoff.allure.utils.createAttachmentFile
 
-class LogcatRule : TestRule {
+class LogcatDumpRule : TestRule {
     override fun apply(base: Statement, description: Description): Statement {
         return object : Statement() {
             override fun evaluate() {
                 try {
-                    clearLogcat()
                     base.evaluate()
                 } catch (t: Throwable) {
                     dumpLogcat()
                     throw t
                 }
             }
-        }
-    }
-
-    private fun clearLogcat() {
-        with(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())) {
-            executeShellCommand("logcat -c")
         }
     }
 
