@@ -6,6 +6,7 @@ buildscript {
     }
 
     dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.51'
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -13,6 +14,7 @@ buildscript {
 }
 ext {
     gradleScriptDir = "${rootProject.projectDir}/gradle"
+
     compileSdkVersion = 28
     minSdkVersion = 18
     buildToolsVersion = '28.0.2'
@@ -38,6 +40,12 @@ apply from: 'gradle/bintray.gradle'
 allprojects {
     group 'io.qameta.allure'
     version = version
+}
+
+subprojects { project ->
+
+    apply from: "${gradleScriptDir}/bintray.gradle"
+    apply plugin: 'com.github.dcendents.android-maven'
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -50,12 +58,4 @@ allprojects {
         google()
         jcenter()
     }
-}
-
-subprojects { project ->
-
-    apply plugin: 'maven'
-
-    apply from: "${gradleScriptDir}/common.gradle"
-
 }
