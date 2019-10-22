@@ -51,7 +51,7 @@ android {
 }
 
 ```
-ut be aware that new version isn't backward compatible with older versions. 
+But be aware that new version isn't backward compatible with older versions. 
 
 Old version, without AndroidX, now not supported
 Add to: _app/build.gradle_
