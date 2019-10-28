@@ -7,8 +7,6 @@ import io.qameta.allure.android.AllureRunListener
 import org.junit.runner.Description
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
-import io.qameta.allure.android.model.Status
-import io.qameta.allure.android.model.StatusDetails
 
 /**
  * @author Badya on 05.06.2017.

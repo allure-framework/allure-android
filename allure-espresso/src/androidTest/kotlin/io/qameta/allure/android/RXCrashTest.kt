@@ -12,14 +12,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class CrashTest {
+class RXCrashTest {
     @get:Rule
     val activityRule = ActivityTestRule<CrashTestActivity>(CrashTestActivity::class.java, true, false)
 
-    // adb shell am instrument -w -r   -e debug false -e class io.qameta.allure.android.CrashTest#crash io.qameta.allure.android.test/io.qameta.allure.espresso.AllureAndroidRunner
+    // adb shell am instrument -w -r   -e debug false -e class io.qameta.allure.android.CrashTest#rxCrash io.qameta.allure.android.test/io.qameta.allure.espresso.AllureAndroidRunner
     @Test
-    fun crash() {
+    fun rxCrash() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext().applicationContext, CrashTestActivity::class.java))
-        onView(withId(R.id.crash_button)).perform(click())
+        onView(withId(R.id.rx_crash_button)).perform(click())
     }
 }

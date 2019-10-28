@@ -1,8 +1,5 @@
 package io.qameta.allure.android
 
-import io.qameta.allure.android.AllureCommonLifecycle
-import io.qameta.allure.android.AllureLifecycle
-import io.qameta.allure.android.AllureStorage
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
