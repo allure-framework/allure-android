@@ -33,7 +33,7 @@ class AllureAndroidListener : InstrumentationRunListener() {
     }
 
     override fun testRunFinished(result: Result?) {
-        allureListenerDelegate.testRunFinished()
+        allureListenerDelegate.testRunFinished(result)
     }
 
     override fun testIgnored(description: Description) {
