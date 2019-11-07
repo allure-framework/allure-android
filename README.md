@@ -1,5 +1,6 @@
 [![Build Status](https://github.com/allure-framework/allure-android/workflows/Build/badge.svg)](https://github.com/allure-framework/allure-android/actions)
-[![Download](https://api.bintray.com/packages/qameta/maven/allure-android/images/download.svg) ](https://bintray.com/qameta/maven/allure-android/_latestVersion)
+[![Download](https://api.bintray.com/packages/qameta/maven/allure-android/images/download.svg)](https://bintray.com/qameta/maven/allure-android/_latestVersion)
+
 [license]: http://www.apache.org/licenses/LICENSE-2.0 "Apache License 2.0"
 [allure2]: https://github.com/allure-framework/allure2
 [blog]: https://qameta.io/blog
