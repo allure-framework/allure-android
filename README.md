@@ -1,5 +1,5 @@
 [![Build Status](https://github.com/allure-framework/allure-android/workflows/Build/badge.svg)](https://github.com/allure-framework/allure-android/actions)
-
+[![Download](https://api.bintray.com/packages/qameta/maven/allure-android/images/download.svg) ](https://bintray.com/qameta/maven/allure-android/_latestVersion)
 [license]: http://www.apache.org/licenses/LICENSE-2.0 "Apache License 2.0"
 [allure2]: https://github.com/allure-framework/allure2
 [blog]: https://qameta.io/blog
@@ -22,7 +22,7 @@
 ### Configure
 #### Gradle
 
-New version with support AndroidX (BETA), available [here](https://bintray.com/qameta/maven/allure-android/2.0.0-beta1)
+New version with support AndroidX, available [here](https://bintray.com/qameta/maven/allure-android/). 
 
 Add to: _app/build.gradle_
 
@@ -152,7 +152,7 @@ class MyTest {
 }
 ```
 
-### Logcat rule's (BETA)
+### Logcat rule's (only in new version)
 You can use `LogcatDumpRule`, `LogcatClearRule` to clear and capture a device logs in case of `Throwable` during test
 ```kotlin
 class MyTest {
@@ -164,7 +164,7 @@ class MyTest {
 }
 ```
 
-### Window hierarchy rule (BETA)
+### Window hierarchy rule (only in new version)
 You can use `WindowHierarchyRule` to capture a window hierarchy via UIautomator in case of `Throwable` during test
 ```kotlin
 class MyTest {
@@ -177,7 +177,7 @@ class MyTest {
 ```
 
 ### Allure annotations
-You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`(BETA), `@SeverityLevel`(BETA) and others.
+You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`(only in new version), `@SeverityLevel`(only in new version) and others.
 
 ## Contributing to allure-android
 Thanks to all people who contributed. Especially [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
