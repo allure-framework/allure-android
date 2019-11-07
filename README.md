@@ -36,9 +36,9 @@ repositories {
 }
 
 dependencies {
-    androidTestCompile "io.qameta.allure:allure-android-commons:2.0.0-beta1"
-    androidTestCompile "io.qameta.allure:allure-android-model:2.0.0-beta1"
-    androidTestCompile "io.qameta.allure:allure-espresso:2.0.0-beta1"
+    androidTestCompile "io.qameta.allure:allure-android-commons:2.0.0"
+    androidTestCompile "io.qameta.allure:allure-android-model:2.0.0"
+    androidTestCompile "io.qameta.allure:allure-espresso:2.0.0"
 
     androidTestCompile "org.jetbrains.kotlin:kotlin-stdlib:1.2.51"
     androidTestCompile "junit:junit:4.12"
