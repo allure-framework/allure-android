@@ -1,4 +1,4 @@
-package io.qameta.allure.kotlin
+package io.qameta.allure.android.annotations
 
 import java.lang.annotation.Inherited
 

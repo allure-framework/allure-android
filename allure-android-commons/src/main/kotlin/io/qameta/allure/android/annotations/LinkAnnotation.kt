@@ -1,6 +1,6 @@
-package io.qameta.allure.kotlin
+package io.qameta.allure.android.annotations
 
-import io.qameta.allure.kotlin.util.ResultsUtils
+import io.qameta.allure.android.utils.CUSTOM_LINK_TYPE
 import java.lang.annotation.Inherited
 
 /**
@@ -36,7 +36,7 @@ annotation class LinkAnnotation(
      *
      * @return the link type.
      */
-    val type: String = ResultsUtils.CUSTOM_LINK_TYPE,
+    val type: String = CUSTOM_LINK_TYPE,
     /**
      * Url for link. By default will search for system property `allure.link.{type}.pattern`, and use it
      * to generate url.

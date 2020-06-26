@@ -1,11 +1,9 @@
 package io.qameta.allure.android.annotations
 
-import io.qameta.allure.android.utils.ISSUE_LINK_TYPE
-import io.qameta.allure.android.utils.TMS_LINK_TYPE
 import java.lang.annotation.Inherited
 
 /**
- * This annotation used to specify owner for test case.
+ * Wrapper annotation for [TmsLink].
  */
 @Inherited
 @MustBeDocumented
@@ -17,5 +15,4 @@ import java.lang.annotation.Inherited
         AnnotationTarget.ANNOTATION_CLASS,
         AnnotationTarget.CLASS
 )
-@LinkAnnotation(type = TMS_LINK_TYPE)
-annotation class TmsLink(val value: String)
+annotation class TmsLinks(vararg val value: TmsLink)
