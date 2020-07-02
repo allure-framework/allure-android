@@ -12,7 +12,7 @@ import java.lang.annotation.Inherited
         AnnotationTarget.FUNCTION,
         AnnotationTarget.PROPERTY_GETTER,
         AnnotationTarget.PROPERTY_SETTER,
-        AnnotationTarget.CLASS, 
+        AnnotationTarget.CLASS,
         AnnotationTarget.FILE
 )
 annotation class Stories(vararg val value: Story)

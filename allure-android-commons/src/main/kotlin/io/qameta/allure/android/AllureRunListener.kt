@@ -193,13 +193,15 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
             historyId = getHistoryId(description),
             name = getMethodDisplayName(description),
             fullName = "${description.className}.${description.methodName}",
-            links = AnnotationUtils.getLinks(description.annotations),
+            links = AnnotationUtils.getLinks(description.annotations)
+                    + AnnotationUtils.getLinks(description.testClass),
             labels = setOf(
                     Label("package", getPackage(description.testClass)),
                     Label("testClass", description.className),
                     Label("testMethod", description.methodName),
                     Label("suite", getClassDisplayName(description)))
                     + AnnotationUtils.getLabels(description.annotations)
+                    + AnnotationUtils.getLabels(description.testClass)
     )
 
 
