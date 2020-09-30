@@ -11,6 +11,10 @@
 [CONTRIBUTING.md]: .github/CONTRIBUTING.md
 [docs]: https://docs.qameta.io/allure/2.0/
 
+# [DEPRICATED]
+Allurе-android isn't supported anymore. Please, use [allure-kotlin](https://github.com/allure-framework/allure-kotlin) instead. For migration on allure-kotlin, please follow the [guide](allure-kotlin-migration-guide.md). 
+
+
 # Allure Android
 * [Source](https://github.com/allure-framework/allure-android)
 * [Documentation][docs]
